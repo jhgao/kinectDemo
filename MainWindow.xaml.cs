@@ -35,10 +35,16 @@ namespace KinectSkeletonView
         private int rollingTimeInterval = 1;
         private int rollingStepDistance = 10;
 
-        private String filepath = "./Test.avi";
-        private bool isVideoPlaying = false;
+        private String filepathVideo = "./Video2.mp4";
+        private String filepathVideoHint = "./Video1.wmv";
+        private Uri videoUri;
+        private Uri videoUriHint;
+
+
+        private bool isVideoPlaying ;
+        private bool isHintPlaying ;
         private DispatcherTimer delayTimer;
-        private int delayTime = 20; //delay 20 scoends
+        private int delayTime = 15; //delay 20 scoends
         private bool isDelayTimerRunning = false;
 
         public MainWindow()
@@ -49,10 +55,7 @@ namespace KinectSkeletonView
              
             KinectSensor.KinectSensors.StatusChanged += KinectSensors_StatusChanged;
             this.KinectDevice = KinectSensor.KinectSensors.FirstOrDefault(x => x.Status == KinectStatus.Connected);
-
-            videoElement.Source = new Uri(filepath, UriKind.Relative);
-            hintTextLabel.Content = defaultHintText;
-
+            
             //hint text rolling
             hintTextRollingTimer = new DispatcherTimer();
             hintTextRollingTimer.Tick += new EventHandler(hintTextRollingTimer_Tick);
@@ -63,6 +66,15 @@ namespace KinectSkeletonView
             delayTimer = new DispatcherTimer();
             delayTimer.Tick += new EventHandler(delayTimer_Tick);
             delayTimer.Interval = new TimeSpan(0, 0, delayTime);
+
+
+            //start Hint video
+            videoUri = new Uri(filepathVideo, UriKind.Relative);
+            videoUriHint = new Uri(filepathVideoHint, UriKind.Relative);
+            videoElement.Source = videoUriHint;
+            hintTextLabel.Content = defaultHintText;
+            hintTextLabel.Visibility = Visibility.Hidden;
+            this.stopVideoAndloopHintVideo();
         }
         
         public KinectSensor KinectDevice
@@ -302,11 +314,32 @@ namespace KinectSkeletonView
 
         private void stopVideoAndShowHint()
         {
-
             hintTextLabel.Visibility = Visibility.Visible;
             this.videoElement.Stop();
             this.videoElement.Close();
             isVideoPlaying = false;
+        }
+
+        private void stopVideoAndloopHintVideo()
+        {
+            this.videoElement.Stop();
+            this.videoElement.Close();
+            isVideoPlaying = false;
+
+            videoElement.Source = videoUriHint;
+            this.videoElement.Play();
+            isHintPlaying = true;
+        }
+
+        private void playVideoAndstopHintVideo()
+        {
+            this.videoElement.Stop();
+            this.videoElement.Close();
+            isHintPlaying = false;
+
+            isVideoPlaying = true;
+            videoElement.Source = videoUri;
+            this.videoElement.Play();
         }
 
         private void delayTimer_Tick(object sender, EventArgs e)
@@ -314,7 +347,8 @@ namespace KinectSkeletonView
             if (isVideoPlaying)
             {
                 Console.WriteLine("delay time out, stop video");
-                this.stopVideoAndShowHint();
+                //this.stopVideoAndShowHint();
+                this.stopVideoAndloopHintVideo();
             }
 
             //stop timer
@@ -329,7 +363,8 @@ namespace KinectSkeletonView
                 this.delayTimer.Stop();
                 isDelayTimerRunning = false;
             }
-            this.playVideoAndHideHint();
+            //this.playVideoAndHideHint();
+            this.playVideoAndstopHintVideo();
         }
 
         private void onPeopleNoneFrame()
@@ -343,7 +378,8 @@ namespace KinectSkeletonView
 
         private void videoElement_MediaEnded(object sender, RoutedEventArgs e)
         {
-            this.stopVideoAndShowHint();
+            //this.stopVideoAndShowHint();
+            this.stopVideoAndloopHintVideo();
         }
 
     }

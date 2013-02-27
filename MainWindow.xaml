@@ -5,27 +5,7 @@
         Title="VideoPlayDemo" WindowStartupLocation="CenterScreen" HorizontalAlignment="Left" VerticalAlignment="Top" SizeChanged="Window_SizeChanged" WindowState="Normal" MouseDoubleClick="Window_MouseDoubleClick" Background="Black">
     <Grid  x:Name="LayoutRoot" HorizontalAlignment="Center" VerticalAlignment="Center" >
         <MediaElement x:Name="videoElement" HorizontalAlignment="Center"  VerticalAlignment="Center" LoadedBehavior="Manual" Stretch="UniformToFill" SizeChanged="videoElement_SizeChanged" UseLayoutRounding="False" MediaEnded="videoElement_MediaEnded" />
-        <Label x:Name="hintTextLabel" Content="Label text" FontSize="22" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Foreground="White">
-            <Label.Style>
-                <Style TargetType="Label">
-                    <Style.Triggers>
-                        <EventTrigger RoutedEvent="Label.Loaded">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard >
-                                    <Storyboard TargetProperty="Opacity">
-                                        <DoubleAnimation
-                                            Storyboard.TargetProperty="Opacity"
-                                            From="0"
-                                            To="1"
-                                            Duration="0:0:3"
-                                            RepeatBehavior="Forever"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Label.Style>
+        <Label x:Name="hintTextLabel" Content="Label text" FontSize="22" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Foreground="White" d:IsHidden="True">
         </Label>
     </Grid>
 </Window>
