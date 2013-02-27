@@ -35,7 +35,7 @@ namespace KinectSkeletonView
         private int rollingTimeInterval = 1;
         private int rollingStepDistance = 10;
 
-        private String filepath = "./Test.mp4";
+        private String filepath = "./Test.avi";
         private bool isVideoPlaying = false;
         private DispatcherTimer delayTimer;
         private int delayTime = 20; //delay 20 scoends
@@ -339,6 +339,11 @@ namespace KinectSkeletonView
                 delayTimer.Start();     //delay to stop video
                 isDelayTimerRunning = true;
             }
+        }
+
+        private void videoElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            this.stopVideoAndShowHint();
         }
 
     }

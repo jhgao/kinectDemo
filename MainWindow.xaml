@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="KinectSkeletonView.MainWindow"
         Title="VideoPlayDemo" WindowStartupLocation="CenterScreen" HorizontalAlignment="Left" VerticalAlignment="Top" SizeChanged="Window_SizeChanged" WindowState="Normal" MouseDoubleClick="Window_MouseDoubleClick" Background="Black">
     <Grid  x:Name="LayoutRoot" HorizontalAlignment="Center" VerticalAlignment="Center" >
-        <MediaElement x:Name="videoElement" HorizontalAlignment="Center"  VerticalAlignment="Center" LoadedBehavior="Manual" Stretch="UniformToFill" SizeChanged="videoElement_SizeChanged" UseLayoutRounding="False" />
+        <MediaElement x:Name="videoElement" HorizontalAlignment="Center"  VerticalAlignment="Center" LoadedBehavior="Manual" Stretch="UniformToFill" SizeChanged="videoElement_SizeChanged" UseLayoutRounding="False" MediaEnded="videoElement_MediaEnded" />
         <Label x:Name="hintTextLabel" Content="Label text" FontSize="22" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Foreground="White">
             <Label.Style>
                 <Style TargetType="Label">
